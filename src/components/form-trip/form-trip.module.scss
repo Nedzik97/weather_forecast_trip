@@ -1,0 +1,86 @@
+.modal {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  width: 600px;
+  height: auto; 
+}
+
+.tittleWraper {
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	margin-bottom: 50px;
+	padding: 15px;
+	border-bottom: 1px solid #ced4da;
+}
+
+.modalTittle {
+	font-size: 16px;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonWrapper {
+	display: flex;
+	justify-content: flex-end;
+	gap: 15px;
+	margin-top: 50px;
+	padding: 15px;
+	border-top: 1px solid #ced4da;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+	margin: 0 15px 20px 15px;
+}
+
+.modal select,
+.modal input[type="text"],
+.modal input[type="date"] {
+	margin-top: 5px;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+}
+
+.modal input:last-of-type {
+	margin-bottom: 0;
+}
+
+.buttonCancel {
+	width: 80px;
+	padding: 10px 15px;
+	background-color: transparent;
+  color: #000;
+  border: 1px solid #ced4da;
+  cursor: pointer;
+}
+
+.buttonSave {
+	width: 60px;
+	padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.closeBtn {
+  background: none;
+	border: none;
+  font-size: 20px; 
+  cursor: pointer;
+  color: #333; /* Цвет крестика */
+}
+
+.closeBtn:hover {
+	color: #007bff
+}
+

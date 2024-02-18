@@ -4,6 +4,7 @@ import partlyCloudyDayIcon from '../../assets/icons-weather/partly-cloudy-day.pn
 import clearDayIcon from '../../assets/icons-weather/clear-day.png';
 import rainIcon from '../../assets/icons-weather/rain.png';
 import snowIcon from '../../assets/icons-weather/snow.png';
+import fogIcon from '../../assets/icons-weather/fog-icon.png';
 import { getDayOfWeek } from '../../utils';
 
 import styles from './weather-during-trip.module.scss';
@@ -21,7 +22,7 @@ export const WeatherDuringTrip = () => {
               <img
                 className={styles.iconWeather}
                 src={getWeatherIcon(day.icon)}
-                alt={day.conditions}
+                alt={day.icon}
               />
               <span className={styles.temp}>
                 {day.tempmax}º / {day.tempmin}º
@@ -46,5 +47,7 @@ function getWeatherIcon(weatherType) {
       return rainIcon;
     case 'snow':
       return snowIcon;
+    case 'fog':
+      return fogIcon;
   }
 }

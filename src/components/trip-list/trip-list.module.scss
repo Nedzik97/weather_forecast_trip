@@ -30,7 +30,7 @@
 .searchLabel::before {
 	content: '';
 	position: absolute;
-	left: 8px;
+	left: 20px;
 	top: 50%;
 	transform: translateY(-50%);
 	width: 20px;
@@ -46,10 +46,15 @@
 }
 
 .tripItem {
+	&:focus {
+		border: solid 1px #007bff; 
+		outline: #007bff;
+	}
   width: 150px;
 	height: 225px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+	border: solid 1px #fff;;
 	cursor: pointer;
 }
 

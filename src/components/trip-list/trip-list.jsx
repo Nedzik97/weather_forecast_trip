@@ -39,6 +39,7 @@ export const TripList = () => {
             onClick={() =>
               getWeatherDuringTrip(trip.city, trip.startDate, trip.endDate)
             }
+            tabIndex="0"
           >
             <img src={getImageUrl(trip.city)} alt={trip.city} />
             <h2>{trip.city}</h2>

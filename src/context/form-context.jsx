@@ -5,7 +5,13 @@ const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState([
+    {
+      city: 'London',
+      startDate: '2024-02-22',
+      endDate: '2024-02-30',
+    },
+  ]);
 
   const getDataTrip = (city, startDate, endDate) => {
     const newTripData = { city, startDate, endDate };
