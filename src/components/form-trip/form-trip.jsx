@@ -1,24 +1,35 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { cities } from '../../mocks';
 import { useFormContext } from '../../context/form-context';
 
 import styles from './form-trip.module.scss';
 
 export const FormTrip = () => {
-  const { getDataTrip, setIsFormOpen } = useFormContext();
+  const [isFormValid, setIsFormValid] = useState(false);
+  const { createTrip, setIsFormOpen } = useFormContext();
   const formRef = useRef(null);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = {
-      city: formRef.current.city.value,
-      startDate: formRef.current.startDate.value,
-      endDate: formRef.current.endDate.value,
-    };
+    if (formRef.current.reportValidity()) {
+      const formData = {
+        city: formRef.current.city.value,
+        startDate: formRef.current.startDate.value,
+        endDate: formRef.current.endDate.value,
+      };
 
-    getDataTrip(formData.city, formData.startDate, formData.endDate);
-    formRef.current.reset();
-    setIsFormOpen(false);
+      createTrip(formData.city, formData.startDate, formData.endDate);
+      setIsFormOpen(false);
+      setIsFormValid(true);
+      formRef.current.reset();
+    } else {
+      setIsFormValid(false);
+    }
+  };
+
+  const handleFormChange = () => {
+    setIsFormValid(formRef.current.checkValidity());
   };
 
   return (
@@ -32,11 +43,18 @@ export const FormTrip = () => {
           ✕
         </button>
       </div>
-      <form ref={formRef} onSubmit={handleSubmit}>
-        <label>
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit}
+        onChange={handleFormChange}
+        lang="en"
+      >
+        <label className={styles.labelCity}>
           City
-          <select name="city">
-            <option value="">Выберите город</option>
+          <select name="city" required>
+            <option value="" disabled selected hidden>
+              Please select a city
+            </option>
             {cities.map((city, index) => (
               <option key={index} value={city.name}>
                 {city}
@@ -60,7 +78,11 @@ export const FormTrip = () => {
           >
             Cancel
           </button>
-          <button className={styles.buttonSave} type="submit">
+          <button
+            className={styles.buttonSave}
+            type="submit"
+            disabled={!isFormValid}
+          >
             Save
           </button>
         </div>

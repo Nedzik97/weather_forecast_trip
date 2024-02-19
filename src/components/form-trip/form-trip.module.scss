@@ -1,4 +1,5 @@
 .modal {
+	position: relative;
   background-color: #f8f9fa;
   border-radius: 4px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -40,6 +41,34 @@ label {
 	margin: 0 15px 20px 15px;
 }
 
+label > select {
+	-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select::after {
+	position: absolute;
+	content: '';
+	top: 147px;
+	right: 25px;
+	width: 24px;
+	height: 24px;
+	background: url('../../assets/icons/bottom-arrow.svg') no-repeat;
+}
+
+input:invalid {
+	border: 1px solid red;
+}
+
+::-webkit-calendar-picker-indicator {
+	cursor: pointer;
+}
+
+::-webkit-datetime-edit-text {
+  color: transparent;
+}
+
 .modal select,
 .modal input[type="text"],
 .modal input[type="date"] {
@@ -51,6 +80,10 @@ label {
 
 .modal input:last-of-type {
 	margin-bottom: 0;
+}
+
+.invalid {
+	border: 1px solid red;
 }
 
 .buttonCancel {
@@ -70,6 +103,11 @@ label {
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+.buttonSave:disabled {
+	opacity: 0.5;
+  pointer-events: none;
 }
 
 .closeBtn {

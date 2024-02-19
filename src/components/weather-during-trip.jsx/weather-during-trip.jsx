@@ -1,11 +1,5 @@
 import { useWeatherContext } from '../../context/weather-during-trip';
-import cloudyIcon from '../../assets/icons-weather/cloudy.png';
-import partlyCloudyDayIcon from '../../assets/icons-weather/partly-cloudy-day.png';
-import clearDayIcon from '../../assets/icons-weather/clear-day.png';
-import rainIcon from '../../assets/icons-weather/rain.png';
-import snowIcon from '../../assets/icons-weather/snow.png';
-import fogIcon from '../../assets/icons-weather/fog-icon.png';
-import { getDayOfWeek } from '../../utils';
+import { getDayOfWeek, getWeatherIcon } from '../../utils';
 
 import styles from './weather-during-trip.module.scss';
 
@@ -25,7 +19,7 @@ export const WeatherDuringTrip = () => {
                 alt={day.icon}
               />
               <span className={styles.temp}>
-                {day.tempmax}º / {day.tempmin}º
+                {Math.round(day.tempmax)}º / {Math.round(day.tempmin)}º
               </span>
             </li>
           );
@@ -34,20 +28,3 @@ export const WeatherDuringTrip = () => {
     </div>
   );
 };
-
-function getWeatherIcon(weatherType) {
-  switch (weatherType) {
-    case 'partly-cloudy-day':
-      return partlyCloudyDayIcon;
-    case 'clear-day':
-      return clearDayIcon;
-    case 'cloudy':
-      return cloudyIcon;
-    case 'rain':
-      return rainIcon;
-    case 'snow':
-      return snowIcon;
-    case 'fog':
-      return fogIcon;
-  }
-}

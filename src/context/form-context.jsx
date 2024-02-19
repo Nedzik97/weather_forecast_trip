@@ -3,24 +3,46 @@ import PropTypes from 'prop-types';
 
 const FormContext = createContext();
 
+let index = 0;
+
 export const FormProvider = ({ children }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [formData, setFormData] = useState([
-    {
+  const [tripsData, setTripsData] = useState({
+    trips: [
+      {
+        id: index,
+        city: 'London',
+        startDate: '2024-02-22',
+        endDate: '2024-02-30',
+      },
+    ],
+    selectedTrip: {
+      id: index,
       city: 'London',
       startDate: '2024-02-22',
       endDate: '2024-02-30',
     },
-  ]);
+  });
 
-  const getDataTrip = (city, startDate, endDate) => {
-    const newTripData = { city, startDate, endDate };
-    setFormData((prevFormData) => [...prevFormData, newTripData]);
+  const selectTrip = (id) => {
+    const selectedTrip = tripsData.trips.find((trip) => trip.id === id);
+    setTripsData((prev) => ({
+      ...prev,
+      selectedTrip,
+    }));
+  };
+
+  const createTrip = (city, startDate, endDate) => {
+    const newTripData = { id: ++index, city, startDate, endDate };
+    setTripsData((prev) => ({
+      ...prev,
+      trips: [...prev.trips, newTripData],
+    }));
   };
 
   return (
     <FormContext.Provider
-      value={{ isFormOpen, setIsFormOpen, formData, getDataTrip }}
+      value={{ isFormOpen, setIsFormOpen, tripsData, createTrip, selectTrip }}
     >
       {children}
     </FormContext.Provider>

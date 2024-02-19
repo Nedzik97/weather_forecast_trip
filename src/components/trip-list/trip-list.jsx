@@ -6,7 +6,7 @@ import { useWeatherContext } from '../../context/weather-during-trip';
 import styles from './trip-list.module.scss';
 
 export const TripList = () => {
-  const { formData, setIsFormOpen } = useFormContext();
+  const { tripsData, setIsFormOpen, selectTrip } = useFormContext();
   const { getWeatherDuringTrip } = useWeatherContext();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -14,7 +14,7 @@ export const TripList = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredCities = formData.filter((trip) =>
+  const filteredCities = tripsData.trips.filter((trip) =>
     trip.city.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
@@ -36,9 +36,10 @@ export const TripList = () => {
           <li
             className={styles.tripItem}
             key={index}
-            onClick={() =>
-              getWeatherDuringTrip(trip.city, trip.startDate, trip.endDate)
-            }
+            onClick={() => {
+              getWeatherDuringTrip(trip.city, trip.startDate, trip.endDate);
+              selectTrip(trip.id);
+            }}
             tabIndex="0"
           >
             <img src={getImageUrl(trip.city)} alt={trip.city} />
