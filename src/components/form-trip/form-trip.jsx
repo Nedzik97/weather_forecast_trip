@@ -1,35 +1,42 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { cities } from '../../mocks';
 import { useFormContext } from '../../context/form-context';
+import { getCurrentDate, getMaxEndDate } from '../../formValidation';
 
 import styles from './form-trip.module.scss';
 
 export const FormTrip = () => {
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [formData, setFormData] = useState({
+    city: '',
+    startDate: '',
+    endDate: '',
+  });
+
   const { createTrip, setIsFormOpen } = useFormContext();
-  const formRef = useRef(null);
+
+  const isFormValid = formData.city && formData.startDate && formData.endDate;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (formRef.current.reportValidity()) {
-      const formData = {
-        city: formRef.current.city.value,
-        startDate: formRef.current.startDate.value,
-        endDate: formRef.current.endDate.value,
-      };
-
+    if (isFormValid) {
       createTrip(formData.city, formData.startDate, formData.endDate);
       setIsFormOpen(false);
-      setIsFormValid(true);
-      formRef.current.reset();
-    } else {
-      setIsFormValid(false);
+
+      setFormData({
+        city: '',
+        startDate: '',
+        endDate: '',
+      });
     }
   };
 
-  const handleFormChange = () => {
-    setIsFormValid(formRef.current.checkValidity());
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   return (
@@ -43,17 +50,18 @@ export const FormTrip = () => {
           ✕
         </button>
       </div>
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        onChange={handleFormChange}
-        lang="en"
-      >
-        <label className={styles.labelCity}>
+      <form onSubmit={(e) => handleSubmit(e)} lang="en">
+        <label htmlFor="city" className={styles.labelCity}>
           City
-          <select name="city" required>
+          <select
+            id="city"
+            name="city"
+            required
+            value={formData.city}
+            onChange={(e) => handleInputChange(e)}
+          >
             <option value="" disabled selected hidden>
-              Please select a city
+              Select a city
             </option>
             {cities.map((city, index) => (
               <option key={index} value={city.name}>
@@ -62,13 +70,31 @@ export const FormTrip = () => {
             ))}
           </select>
         </label>
-        <label>
+        <label htmlFor="startDate" className={styles.labelStartDate}>
           Start date
-          <input type="date" name="startDate" required />
+          <input
+            type="date"
+            id="startDate"
+            name="startDate"
+            min={getCurrentDate()}
+            value={formData.startDate}
+            onChange={(e) => handleInputChange(e)}
+            required
+          />
         </label>
-        <label>
+        <label htmlFor="endDate" className={styles.labelEndDate}>
           End date
-          <input type="date" name="endDate" required />
+          <input
+            type="date"
+            id="endDate"
+            name="endDate"
+            min={formData.startDate}
+            max={getMaxEndDate(formData.startDate)}
+            value={formData.endDate}
+            onChange={(e) => handleInputChange(e)}
+            disabled={!formData.startDate}
+            required
+          />
         </label>
         <div className={styles.buttonWrapper}>
           <button

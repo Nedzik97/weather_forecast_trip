@@ -1,6 +1,7 @@
 const baseUrl =
   'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline';
-const accountKey = `Y4CFHZPA34MUB2VBZ7K66YGE6`;
+// const accountKey = `Y4CFHZPA34MUB2VBZ7K66YGE6`;
+const accountKey = `KWLSNKV6EKHEEEAVNCWQZQZZQ`;
 
 export const fetchWeatherDataForCity = (location) => {
   return fetch(

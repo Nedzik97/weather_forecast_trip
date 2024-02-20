@@ -39,6 +39,37 @@ label {
   flex-direction: column;
   margin-bottom: 10px;
 	margin: 0 15px 20px 15px;
+	padding-left: 5px;
+}
+
+.labelCity::before {
+	content: '';
+	position: absolute;
+	top: 115px;
+	left: 10px;
+	width: 10px;
+	height: 10px;
+	background: url('../../assets/icons/asterisk_icon.svg') no-repeat;
+}
+
+.labelStartDate::before {
+	content: '';
+	position: absolute;
+	top: 205px;
+	left: 10px;
+	width: 10px;
+	height: 10px;
+	background: url('../../assets/icons/asterisk_icon.svg') no-repeat;
+}
+
+.labelEndDate::before {
+	content: '';
+	position: absolute;
+	top: 298px;
+	left: 10px;
+	width: 10px;
+	height: 10px;
+	background: url('../../assets/icons/asterisk_icon.svg') no-repeat;
 }
 
 label > select {
@@ -55,10 +86,6 @@ select::after {
 	width: 24px;
 	height: 24px;
 	background: url('../../assets/icons/bottom-arrow.svg') no-repeat;
-}
-
-input:invalid {
-	border: 1px solid red;
 }
 
 ::-webkit-calendar-picker-indicator {
@@ -115,7 +142,7 @@ input:invalid {
 	border: none;
   font-size: 20px; 
   cursor: pointer;
-  color: #333; /* Цвет крестика */
+  color: #333;
 }
 
 .closeBtn:hover {

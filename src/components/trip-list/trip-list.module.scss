@@ -1,13 +1,49 @@
-.tripListWrapper {
-	margin-top: 40px;
+.tripList {
+	display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.tripList::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom right, #4d7fff 0%, #1a56ff 100%);
+  border-radius: 5px;
+}
+
+/* Define the track style */
+.tripList::-webkit-scrollbar-track {
+  background-color: #ddd;
+  border: 1px solid #ccc;
+}
+
+/* Define the button style */
+.tripList::-webkit-scrollbar-button {
+  background-color: #4d7fff;
+  border-radius: 5px;
+}
+
+/* Define the button style when being hovered over */
+.tripList::-webkit-scrollbar-button:hover {
+  background-color: #999999;
+}
+
+.tripListContainerWithScroll {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: nowrap;
+	position: relative;
+	gap: 30px;
+	width: 100%;
 }
 
 .searchInput {
   width: 200px;
   height: 20px;
   padding: 10px 0 10px 40px ;
-  border: 1px solid #ccc;
+  background: #ddd;
   border-radius: 10px;
+	border: none;
   outline: none;
   font-size: 14px;
   color: #000; 
@@ -24,25 +60,25 @@
 }
 
 .inputWrapper {
+	width: 250px;
 	position: relative;
+	margin-bottom: 20px;
 }
 
-.searchLabel::before {
-	content: '';
-	position: absolute;
-	left: 20px;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 20px;
-	height: 20px;
-	background: url('../../assets/icons/glass.svg') no-repeat;
-}
-
-.tripListContainer {
-  display: flex;
-  justify-content: flex-start;
-  gap: 30px;
-	margin-top: 40px;
+.searchLabel {
+	margin: 0;
+	&::before {
+		content: '';
+		position: absolute;
+		left: 15px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 18px;
+		height: 18px;
+		background-image: url('../../assets/icons/glass.svg');
+		background-repeat: no-repeat;
+		background-size: 100%;
+	}
 }
 
 .tripItem {
@@ -50,24 +86,26 @@
 		border: solid 1px #007bff; 
 		outline: #007bff;
 	}
-  width: 150px;
-	height: 225px;
+	position: relative;
+  width: 225px;
+	height: 300px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 	border: solid 1px #fff;;
 	cursor: pointer;
+	flex-shrink: 0;
 }
 
 .tripItem img {
   width: 100%;
-  height: 150px;
+  height: 200px;
 }
 
 .tripItem h2 {
-  font-size: 15px;
+  font-size: 22px;
 	font-weight: 500;
   color: #333;
-	margin: 10px 0 0 10px;
+	margin: 14px 0 0 10px;
 }
 
 .tripItem span {
@@ -78,10 +116,10 @@
 
 .createTripButton {
 	&:hover {
-		background-color: #999;
+		background-color: #ddd;
 	}
-	width: 150px;
-	height: 150px;
+	width: 225px;
+	height: 200px;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -96,6 +134,66 @@
 
 .addButton {
   font-size: 18px;
-
   margin-bottom: 4px;
+}
+
+.errowLeft {
+	position: absolute;
+	top: 25%;
+	left: 0;
+	width: 50px;
+	height: 50px;
+	border: none;
+	background: transparent;
+	padding: 0;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	&:hover {
+			background: #007bff;
+			border-radius: 50%;
+	}
+}
+
+.errowLeft svg {
+	fill: #fff;
+	width: 51px;
+	height: 52px;
+}
+
+.errowRight {
+	position: absolute;
+	top: 25%;
+	right: 22%;
+	width: 50px;
+	height: 50px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	&:hover {
+		background: #007bff;
+		border-radius: 50%;
+	}
+}
+
+.errowRight svg {
+	fill: #fff
+}
+
+.deleteButton {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	background: transparent;
+	color: #fff;
+	cursor: pointer;
+	&:hover {
+		color: red;
+	}
 }
