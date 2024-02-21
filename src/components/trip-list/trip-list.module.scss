@@ -6,28 +6,6 @@
 	white-space: nowrap;
 }
 
-.tripList::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom right, #4d7fff 0%, #1a56ff 100%);
-  border-radius: 5px;
-}
-
-/* Define the track style */
-.tripList::-webkit-scrollbar-track {
-  background-color: #ddd;
-  border: 1px solid #ccc;
-}
-
-/* Define the button style */
-.tripList::-webkit-scrollbar-button {
-  background-color: #4d7fff;
-  border-radius: 5px;
-}
-
-/* Define the button style when being hovered over */
-.tripList::-webkit-scrollbar-button:hover {
-  background-color: #999999;
-}
-
 .tripListContainerWithScroll {
 	display: flex;
 	justify-content: flex-start;

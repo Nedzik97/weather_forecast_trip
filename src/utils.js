@@ -36,3 +36,13 @@ export const getWeatherIcon = (weatherType) => {
       return null;
   }
 };
+
+export const formatDate = (inputDate) => {
+  const year = inputDate.substring(0, 4);
+  const month = inputDate.substring(5, 7);
+  const day = inputDate.substring(8, 10);
+
+  const formattedDate = `${day}.${month}.${year}`;
+
+  return formattedDate;
+};

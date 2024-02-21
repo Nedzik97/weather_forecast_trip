@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getCurrentDate, getMaxEndDate } from '../formValidation';
 import PropTypes from 'prop-types';
 
 const FormContext = createContext();
@@ -17,8 +16,8 @@ export const FormProvider = ({ children }) => {
             {
               id: index,
               city: 'London',
-              startDate: getCurrentDate(),
-              endDate: getMaxEndDate(getCurrentDate()),
+              startDate: '2024-02-22',
+              endDate: '2024-02-30',
             },
           ],
           selectedTrip: {
@@ -57,6 +56,12 @@ export const FormProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('tripsData', JSON.stringify(tripsData));
   }, [tripsData]);
+
+  useEffect(() => {
+    if (tripsData.trips.length === 0) {
+      localStorage.removeItem('tripsData');
+    }
+  }, [tripsData.trips]);
 
   return (
     <FormContext.Provider

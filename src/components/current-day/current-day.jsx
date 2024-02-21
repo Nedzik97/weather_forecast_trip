@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { GoogleAuthComponent } from '../google-auth/google-auth';
 import { useWeatherContext } from '../../context/weather-during-trip';
 import { useFormContext } from '../../context/form-context';
 import { getDayOfWeek, getWeatherIcon } from '../../utils';
@@ -39,13 +40,13 @@ export const CurrentDay = () => {
 
   return (
     <div className={styles.currentDayWrapper}>
+      <GoogleAuthComponent />
       <p className={styles.dayOfWeek}>{getDayOfWeek(currentDay.dayOfWeek)}</p>
       <span>
         <img src={getWeatherIcon(currentDay.icon)} alt={currentDay.icon} />
         {Math.round(currentDay.temp)}
       </span>
       <p className={styles.currentCity}>{currentDay.city}</p>
-
       <div className={styles.containerTime}>
         <div className={styles.item}>
           <div>{timeLeft.days}</div>

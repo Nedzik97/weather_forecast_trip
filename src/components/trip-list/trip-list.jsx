@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getImageUrl } from '../../utils';
+import { getImageUrl, formatDate } from '../../utils';
 import { useFormContext } from '../../context/form-context';
 import { useWeatherContext } from '../../context/weather-during-trip';
 import ArrowLeft from '../../assets/icons/left_icon.svg?react';
@@ -71,7 +71,7 @@ export const TripList = () => {
               <img src={getImageUrl(trip.city)} alt={trip.city} />
               <h2>{trip.city}</h2>
               <span>
-                {trip.startDate} - {trip.endDate}
+                {formatDate(trip.startDate)} - {formatDate(trip.endDate)}
               </span>
               <button
                 className={styles.deleteButton}
