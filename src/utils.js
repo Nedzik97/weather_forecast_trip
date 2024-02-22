@@ -5,14 +5,8 @@ import rainIcon from './assets/icons-weather/rain.png';
 import snowIcon from './assets/icons-weather/snow.png';
 import fogIcon from './assets/icons-weather/fog-icon.png';
 
-export const getDayOfWeek = (dateString) => {
-  if (!dateString) return '';
-
-  const date = new Date(dateString);
-  const options = { weekday: 'long' };
-
-  return new Intl.DateTimeFormat('en-US', options).format(date);
-};
+export const clientGoogleId =
+  '300371647083-q22ar3j70r35f6kch3fl465qmvk3prka.apps.googleusercontent.com';
 
 export const getImageUrl = (name) => {
   return new URL(`./assets/cities/${name}.jpg`, import.meta.url).href;
@@ -35,14 +29,4 @@ export const getWeatherIcon = (weatherType) => {
     default:
       return null;
   }
-};
-
-export const formatDate = (inputDate) => {
-  const year = inputDate.substring(0, 4);
-  const month = inputDate.substring(5, 7);
-  const day = inputDate.substring(8, 10);
-
-  const formattedDate = `${day}.${month}.${year}`;
-
-  return formattedDate;
 };

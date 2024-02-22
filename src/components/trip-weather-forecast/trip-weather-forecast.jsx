@@ -1,15 +1,16 @@
-import { useWeatherContext } from '../../context/weather-during-trip';
-import { getDayOfWeek, getWeatherIcon } from '../../utils';
+import { useWeatherContext } from '../../context/trip-weather-context';
+import { getWeatherIcon } from '../../utils';
+import { getDayOfWeek } from '../../utils-date';
 
-import styles from './weather-during-trip.module.scss';
+import styles from './trip-weather-forecast.module.scss';
 
-export const WeatherDuringTrip = () => {
-  const { weatherData } = useWeatherContext();
+export const TripWeatherForecast = () => {
+  const { weatherForecast } = useWeatherContext();
   return (
     <div className={styles.weatherWeekContainer}>
-      {weatherData.length > 0 && <p>Week</p>}
+      {weatherForecast.length > 0 && <p>Week</p>}
       <ul className={styles.daysDuringTrip}>
-        {weatherData.map((day, index) => {
+        {weatherForecast.map((day, index) => {
           return (
             <li className={styles.day} key={index}>
               <h2 className={styles.dayOfWeek}>{getDayOfWeek(day.datetime)}</h2>

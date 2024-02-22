@@ -1,18 +1,21 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { cities } from '../../mocks';
-import { useFormContext } from '../../context/form-context';
-import { getCurrentDate, getMaxEndDate } from '../../formValidation';
+import { useFormContext } from '../../context/trip-context';
+import { getCurrentDate, getMaxEndDate } from '../../utils-date';
 
 import styles from './form-trip.module.scss';
 
-export const FormTrip = () => {
-  const [formData, setFormData] = useState({
-    city: '',
-    startDate: '',
-    endDate: '',
-  });
+const INITIAL_FORM_DATA = {
+  city: '',
+  startDate: '',
+  endDate: '',
+};
 
-  const { createTrip, setIsFormOpen } = useFormContext();
+export const FormTrip = ({ setIsFormOpen }) => {
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+
+  const { createTrip } = useFormContext();
 
   const isFormValid = formData.city && formData.startDate && formData.endDate;
 
@@ -23,11 +26,7 @@ export const FormTrip = () => {
       createTrip(formData.city, formData.startDate, formData.endDate);
       setIsFormOpen(false);
 
-      setFormData({
-        city: '',
-        startDate: '',
-        endDate: '',
-      });
+      setFormData(INITIAL_FORM_DATA);
     }
   };
 
@@ -115,4 +114,8 @@ export const FormTrip = () => {
       </form>
     </div>
   );
+};
+
+FormTrip.propTypes = {
+  setIsFormOpen: PropTypes.func.isRequired,
 };

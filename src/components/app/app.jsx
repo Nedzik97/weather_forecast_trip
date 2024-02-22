@@ -1,26 +1,30 @@
+import { useState } from 'react';
 import { FormTrip } from '../form-trip/form-trip';
-import { useFormContext } from '../../context/form-context';
-import { WeatherDuringTrip } from '../weather-during-trip.jsx/weather-during-trip';
+import { TripWeatherForecast } from '../trip-weather-forecast/trip-weather-forecast';
 import { TripList } from '../trip-list/trip-list';
-import { CurrentDay } from '../current-day/current-day';
+import { CurrentCity } from '../current-city/current-city';
 import { Modal } from '../modal/modal';
 
 import styles from './app.module.scss';
 
 export const App = () => {
-  const { isFormOpen } = useFormContext();
+  const [isFormOpen, setIsFormOpen] = useState(false);
   return (
     <div className={styles.app}>
       <div className={styles.tripList}>
         <h1>
           Weather <span>Forecast</span>
         </h1>
-        <TripList />
-        <WeatherDuringTrip />
-        <Modal open={isFormOpen}>{<FormTrip />}</Modal>
+        <TripList setIsFormOpen={setIsFormOpen} />
+        <TripWeatherForecast />
+        <Modal open={isFormOpen}>
+          <div className={styles.modalBackground}>
+            {<FormTrip setIsFormOpen={setIsFormOpen} />}
+          </div>
+        </Modal>
       </div>
       <div className={styles.currentDay}>
-        <CurrentDay />
+        <CurrentCity />
       </div>
     </div>
   );

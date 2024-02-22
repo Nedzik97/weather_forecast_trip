@@ -1,41 +1,51 @@
+import { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import defaultPicture from '../../assets/icons/default-picture.png';
 
 import styles from './google-auth.module.scss';
 
 export const GoogleAuthComponent = () => {
+  const { saveToLocalStorage, getFromLocalStorage } = useLocalStorage();
+  const [error, setError] = useState(null);
+  const [user, setUser] = useState(getFromLocalStorage('user'));
+
   const handleLoginSuccess = (credentialResponse) => {
     const token = credentialResponse.credential;
     const decoded = jwtDecode(token);
     const { name, picture } = decoded;
 
-    const userData = { name, picture };
-    localStorage.setItem('user', JSON.stringify(userData));
+    const userPicture = picture ? picture : defaultPicture;
+
+    const userData = {
+      name,
+      picture: userPicture,
+    };
+
+    setUser(userData);
+    saveToLocalStorage('user', userData);
   };
 
   const handleLoginError = () => {
-    console.log('Login Failed');
+    setError('Error occurred during authorization');
   };
 
   const handleLogout = () => {
     localStorage.removeItem('user');
+    setUser(null);
   };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className={styles.googleAuthContainer}>
-      {localStorage.getItem('user') ? (
+      {user ? (
         <div className={styles.userInfo}>
-          <div className={styles.buttonWrapper}>
-            <span className={styles.userName}>
-              {JSON.parse(localStorage.getItem('user')).name}
-            </span>
-            <img
-              src={JSON.parse(localStorage.getItem('user')).picture}
-              alt="User"
-              className={styles.userPicture}
-            />
-          </div>
-
+          <span className={styles.userName}>{user.name}</span>
+          <img src={user.picture} alt="user" className={styles.userPicture} />
           <button onClick={handleLogout} className={styles.logoutButton}>
             Logout
           </button>

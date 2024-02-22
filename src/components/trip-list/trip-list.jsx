@@ -1,46 +1,51 @@
 import { useState, useEffect, useRef } from 'react';
-import { getImageUrl, formatDate } from '../../utils';
-import { useFormContext } from '../../context/form-context';
-import { useWeatherContext } from '../../context/weather-during-trip';
+import { useFormContext } from '../../context/trip-context';
+import { useWeatherContext } from '../../context/trip-weather-context';
 import ArrowLeft from '../../assets/icons/left_icon.svg?react';
 import ArrowRight from '../../assets/icons/right_icon.svg?react';
+import PropTypes from 'prop-types';
+import { getImageUrl } from '../../utils';
+import { formatDate } from '../../utils-date';
 
 import styles from './trip-list.module.scss';
 
-export const TripList = () => {
-  const { tripsData, setIsFormOpen, selectTrip, handleDeleteTrip } =
-    useFormContext();
-  const { getWeatherDuringTrip } = useWeatherContext();
-  const [searchTerm, setSearchTerm] = useState('');
+const scrollStep = 100;
 
-  const ref = useRef();
+export const TripList = ({ setIsFormOpen }) => {
+  const { trips, selectTrip, deleteTrip } = useFormContext();
+  const { getWeatherForTrip, getWeatherByCity } = useWeatherContext();
+
+  const [searchTrip, setSearchTrip] = useState('');
+
+  const scrollContainerRef = useRef();
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    setSearchTrip(e.target.value);
   };
 
-  const scroll = (toRight) => {
+  const smoothScroll = (toRight) => {
     const scrollPosition = toRight
-      ? ref.current.scrollLeft + 100
-      : ref.current.scrollLeft - 100;
-    ref.current.scrollTo({
+      ? scrollContainerRef.current.scrollLeft + scrollStep
+      : scrollContainerRef.current.scrollLeft - scrollStep;
+    scrollContainerRef.current.scrollTo({
       left: scrollPosition,
       behavior: 'smooth',
     });
   };
 
   useEffect(() => {
-    tripsData.trips.forEach((trip) => {
-      getWeatherDuringTrip(trip.city, trip.startDate, trip.endDate);
+    trips.tripList.forEach((trip) => {
+      getWeatherForTrip(trip.city, trip.startDate, trip.endDate);
+      getWeatherByCity(trip.city);
     });
   }, []);
 
-  const filteredCities = [...tripsData.trips]
+  const filteredCities = [...trips.tripList]
     .sort((a, b) => {
       return new Date(a.startDate) - new Date(b.startDate);
     })
     .filter((trip) =>
-      trip.city.toLowerCase().includes(searchTerm.toLowerCase()),
+      trip.city.toLowerCase().includes(searchTrip.toLowerCase()),
     );
 
   return (
@@ -49,7 +54,7 @@ export const TripList = () => {
         <label className={styles.searchLabel}>
           <input
             type="text"
-            value={searchTerm}
+            value={searchTrip}
             onChange={handleSearchChange}
             placeholder="Search your trip"
             className={styles.searchInput}
@@ -57,13 +62,14 @@ export const TripList = () => {
         </label>
       </div>
       <div className={styles.tripListContainerWithScroll}>
-        <ul className={styles.tripList} ref={ref}>
+        <ul className={styles.tripList} ref={scrollContainerRef}>
           {filteredCities.map((trip, index) => (
             <li
               className={styles.tripItem}
               key={index}
               onClick={() => {
-                getWeatherDuringTrip(trip.city, trip.startDate, trip.endDate);
+                getWeatherForTrip(trip.city, trip.startDate, trip.endDate);
+                getWeatherByCity(trip.city);
                 selectTrip(trip.id);
               }}
               tabIndex="0"
@@ -77,25 +83,25 @@ export const TripList = () => {
                 className={styles.deleteButton}
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleDeleteTrip(trip.id);
+                  deleteTrip(trip.id);
                 }}
               >
                 &#10006;
               </button>
             </li>
           ))}
-          {tripsData.trips.length > 3 && (
+          {trips.tripList.length > 3 && (
             <>
               <button
                 className={styles.errowLeft}
-                onClick={() => scroll(false)}
+                onClick={() => smoothScroll(false)}
               >
                 <ArrowLeft />
               </button>
 
               <button
                 className={styles.errowRight}
-                onClick={() => scroll(true)}
+                onClick={() => smoothScroll(true)}
               >
                 <ArrowRight />
               </button>
@@ -112,4 +118,8 @@ export const TripList = () => {
       </div>
     </div>
   );
+};
+
+TripList.propTypes = {
+  setIsFormOpen: PropTypes.func.isRequired,
 };

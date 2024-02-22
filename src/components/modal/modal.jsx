@@ -2,8 +2,6 @@ import { useMemo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 
-import styles from './modal.module.scss';
-
 const modalRootElement = document.querySelector('#modal');
 
 export const Modal = (props) => {
@@ -21,12 +19,7 @@ export const Modal = (props) => {
   });
 
   if (open) {
-    return createPortal(
-      <div className={styles.modalBackground}>
-        <div className={styles.modalCard}>{props.children}</div>
-      </div>,
-      element,
-    );
+    return createPortal(props.children, element);
   }
 
   return null;
