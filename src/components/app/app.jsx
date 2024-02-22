@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FormTrip } from '../form-trip/form-trip';
 import { TripWeatherForecast } from '../trip-weather-forecast/trip-weather-forecast';
 import { TripList } from '../trip-list/trip-list';
-import { CurrentCity } from '../current-city/current-city';
+import { TripCityInfo } from '../trip-city-info/trip-city-info';
 import { Modal } from '../modal/modal';
 
 import styles from './app.module.scss';
@@ -24,7 +24,7 @@ export const App = () => {
         </Modal>
       </div>
       <div className={styles.currentDay}>
-        <CurrentCity />
+        <TripCityInfo />
       </div>
     </div>
   );

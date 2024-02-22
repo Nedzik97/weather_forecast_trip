@@ -5,9 +5,9 @@ import { useFormContext } from '../../context/trip-context';
 import { getWeatherIcon } from '../../utils';
 import { getDayOfWeek, calculateTimeLeft } from '../../utils-date';
 
-import styles from './current-city.module.scss';
+import styles from './trip-city-info.module.scss';
 
-export const CurrentCity = () => {
+export const TripCityInfo = () => {
   const { selectedWeatherCity } = useWeatherContext();
   const { trips } = useFormContext();
   const [timeLeft, setTimeLeft] = useState(() =>
